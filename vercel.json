@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/qr/:slug", "destination": "/api/r?slug=:slug" },
-    { "source": "/stats", "destination": "/api/stats" }
+    { "source": "/stats", "destination": "/api/stats" },
+    { "source": "/", "destination": "/api/stats" }
   ]
 }
