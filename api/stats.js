@@ -10,17 +10,19 @@ function escapeHtml(str) {
 function page(body, extraStyle = '') {
   return `<!doctype html>
 <html><head><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#c65d2e">
+<link rel="icon" href="/logo.png">
+<meta name="theme-color" content="#c1272d">
 <title>Painel QR Code</title>
 <style>
   :root {
-    --accent: #c65d2e;
-    --accent-dark: #a84a21;
-    --bg: #faf6f2;
+    --accent: #d3452b;
+    --accent-dark: #a82f1c;
+    --flame: #f2a83e;
+    --bg: #faf5ef;
     --card: #ffffff;
-    --border: #e8ddd3;
-    --text: #2b2420;
-    --muted: #8a7d72;
+    --border: #ecdfd2;
+    --text: #2a1810;
+    --muted: #8a7466;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html { -webkit-text-size-adjust: 100%; }
@@ -40,6 +42,9 @@ function page(body, extraStyle = '') {
   }
   h1 a { font-size: 14px; color: var(--muted); text-decoration: none; padding: 8px 4px; }
   h1 a:hover { color: var(--accent); }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand-logo { height: 32px; width: auto; display: block; }
+  .brand-logo.big { height: 72px; margin: 0 auto 10px; }
   .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
   .add-card { margin-bottom: 16px; }
   .add-form { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -49,7 +54,8 @@ function page(body, extraStyle = '') {
   }
   .add-form input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
   button, .btn {
-    padding: 13px 20px; border-radius: 10px; border: none; background: var(--accent);
+    padding: 13px 20px; border-radius: 10px; border: none;
+    background: linear-gradient(135deg, var(--flame), var(--accent));
     color: #fff; font-size: 16px; font-weight: 600; cursor: pointer; white-space: nowrap;
     min-height: 48px; display: inline-flex; align-items: center; justify-content: center;
   }
@@ -120,8 +126,9 @@ function page(body, extraStyle = '') {
 
 function loginPage(erro) {
   return page(`
-    <h1>Painel QR Code</h1>
-    <div class="card" style="max-width:360px;margin:60px auto 0">
+    <div class="card" style="max-width:360px;margin:60px auto 0;text-align:center">
+      <img class="brand-logo big" src="/logo.png" alt="Forno Paulista" onerror="this.style.display='none'">
+      <h1 style="position:static;justify-content:center;padding:0">Painel QR Code</h1>
       ${erro ? '<p class="erro">Senha incorreta.</p>' : ''}
       <form method="POST" action="/api/login" id="login-form">
         <input type="password" name="senha" placeholder="Senha" style="width:100%;padding:13px 12px;border:1px solid var(--border);border-radius:10px;font-size:16px;min-height:48px" autofocus>
@@ -182,7 +189,10 @@ function adminPage({ links, erro }) {
     .join('');
 
   return page(`
-    <h1>Painel QR Code <a href="/api/logout">Sair</a></h1>
+    <h1>
+      <span class="brand"><img class="brand-logo" src="/logo.png" alt="Forno Paulista" onerror="this.style.display='none'"> Painel QR Code</span>
+      <a href="/api/logout">Sair</a>
+    </h1>
 
     ${erroMsg ? `<p class="erro">${erroMsg}</p>` : ''}
 
