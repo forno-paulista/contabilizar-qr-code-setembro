@@ -189,7 +189,7 @@ function adminPage({ links, erro }) {
           </div>
           <div class="link-card-actions">
             <button type="button" class="secondary copy-btn" data-url="${escapeHtml(trackUrl)}">Copiar link</button>
-            <button type="button" class="secondary ver-qr-btn" data-slug="${escapeHtml(l.slug)}">Ver QR grande</button>
+            <button type="button" class="secondary ver-qr-btn" data-slug="${escapeHtml(l.slug)}">Exibir/baixar QR Code</button>
           </div>
         </div>
       `;
