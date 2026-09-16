@@ -10,6 +10,7 @@ function escapeHtml(str) {
 function page(body, extraStyle = '') {
   return `<!doctype html>
 <html><head><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#c65d2e">
 <title>Painel QR Code</title>
 <style>
   :root {
@@ -21,55 +22,64 @@ function page(body, extraStyle = '') {
     --text: #2b2420;
     --muted: #8a7d72;
   }
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background: var(--bg);
     color: var(--text);
     margin: 0;
-    padding: 20px 14px 60px;
+    padding: 16px 14px 60px;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
   }
   .wrap { max-width: 960px; margin: 0 auto; }
-  h1 { font-size: 22px; margin: 0 0 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-  h1 a { font-size: 14px; color: var(--muted); text-decoration: none; }
+  h1 {
+    font-size: 20px; margin: 0 0 16px; display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; position: sticky; top: 0; background: var(--bg); padding: 6px 0 10px; z-index: 10;
+  }
+  h1 a { font-size: 14px; color: var(--muted); text-decoration: none; padding: 8px 4px; }
   h1 a:hover { color: var(--accent); }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
-  .add-card { margin-bottom: 18px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
+  .add-card { margin-bottom: 16px; }
   .add-form { display: flex; gap: 10px; flex-wrap: wrap; }
   .add-form input {
-    flex: 1; min-width: 140px; padding: 11px 12px; border: 1px solid var(--border);
-    border-radius: 10px; font-size: 15px; background: #fff; color: var(--text);
+    flex: 1; min-width: 140px; padding: 13px 12px; border: 1px solid var(--border);
+    border-radius: 10px; font-size: 16px; background: #fff; color: var(--text); min-height: 48px;
   }
   .add-form input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
   button, .btn {
-    padding: 11px 18px; border-radius: 10px; border: none; background: var(--accent);
-    color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; white-space: nowrap;
+    padding: 13px 20px; border-radius: 10px; border: none; background: var(--accent);
+    color: #fff; font-size: 16px; font-weight: 600; cursor: pointer; white-space: nowrap;
+    min-height: 48px; display: inline-flex; align-items: center; justify-content: center;
   }
   button:hover, .btn:hover { background: var(--accent-dark); }
   button:disabled { opacity: .6; cursor: default; }
   button.secondary, .btn.secondary { background: #fff; color: var(--text); border: 1px solid var(--border); }
   button.secondary:hover { background: var(--bg); }
-  .erro { color: #b3261e; background: #fdecea; border: 1px solid #f3c8c4; border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; font-size: 14px; }
+  .erro { color: #b3261e; background: #fdecea; border: 1px solid #f3c8c4; border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; font-size: 14px; }
   .muted { color: var(--muted); font-size: 13px; }
+  .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 14px 0 10px; flex-wrap: wrap; }
+  .refresh-btn { padding: 9px 16px; min-height: 40px; font-size: 14px; }
   .table { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--card); margin-top: 4px; }
   .row {
     display: grid; grid-template-columns: 1.1fr 1.8fr 1.8fr .6fr 1.3fr;
-    gap: 10px; padding: 14px 16px; align-items: center; border-bottom: 1px solid var(--border);
+    gap: 10px; padding: 16px; align-items: center; border-bottom: 1px solid var(--border);
   }
   .row:last-child { border-bottom: none; }
   .row.header { background: #f7f1eb; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
-  .cell-label { display: none; font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; letter-spacing: .03em; }
+  .cell-label { display: none; font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; letter-spacing: .03em; }
   .trackurl { word-break: break-all; font-size: 14px; color: var(--accent-dark); text-decoration: none; }
   .trackurl:hover { text-decoration: underline; }
-  .copy-btn { margin-top: 6px; padding: 5px 10px; font-size: 12px; background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+  .copy-btn { margin-top: 8px; padding: 9px 14px; font-size: 13px; min-height: 40px; background: var(--bg); color: var(--text); border: 1px solid var(--border); }
   .copy-btn:hover { background: #fff; }
   .dest { font-size: 14px; color: var(--muted); text-decoration: none; word-break: break-all; }
-  .clicks { font-size: 20px; font-weight: 700; }
-  .qr-thumb-wrap { position: relative; width: 64px; height: 64px; }
-  .qr-thumb-wrap img { width: 64px; height: 64px; border-radius: 8px; border: 1px solid var(--border); display: block; }
+  .clicks { font-size: 22px; font-weight: 700; }
+  .qr-thumb-wrap { position: relative; width: 72px; height: 72px; }
+  .qr-thumb-wrap img { width: 72px; height: 72px; border-radius: 8px; border: 1px solid var(--border); display: block; }
   .spinner {
     width: 22px; height: 22px; border: 3px solid var(--border); border-top-color: var(--accent);
-    border-radius: 50%; animation: spin .7s linear infinite; position: absolute; top: 21px; left: 21px;
+    border-radius: 50%; animation: spin .7s linear infinite; position: absolute; top: 25px; left: 25px;
   }
   .qr-thumb-wrap.loaded .spinner { display: none; }
   .qr-thumb-wrap:not(.loaded) img { opacity: 0; }
@@ -78,8 +88,9 @@ function page(body, extraStyle = '') {
     display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,.5);
     border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; margin-right: 6px; vertical-align: -2px;
   }
-  .ver-qr-btn { margin-top: 6px; font-size: 12px; padding: 5px 10px; }
-  .empty { padding: 30px 16px; text-align: center; color: var(--muted); }
+  .spinner-inline.dark { border-color: rgba(0,0,0,.15); border-top-color: var(--text); }
+  .ver-qr-btn { margin-top: 8px; font-size: 13px; padding: 9px 14px; min-height: 40px; }
+  .empty { padding: 36px 16px; text-align: center; color: var(--muted); }
 
   #qr-modal {
     position: fixed; inset: 0; background: rgba(20,15,10,.6); display: flex;
@@ -91,12 +102,16 @@ function page(body, extraStyle = '') {
   #qr-modal .actions { display: flex; gap: 10px; margin-top: 16px; justify-content: center; flex-wrap: wrap; }
 
   @media (max-width: 680px) {
-    body { padding: 14px 10px 50px; }
+    body { padding: 12px 10px 50px; }
+    h1 { font-size: 18px; }
     .row.header { display: none; }
-    .row { grid-template-columns: 1fr; gap: 10px; }
+    .row { grid-template-columns: 1fr; gap: 12px; padding: 18px 16px; }
     .cell-label { display: block; }
     .add-form { flex-direction: column; }
-    .add-form button { width: 100%; }
+    .add-form input, .add-form button { width: 100%; }
+    #qr-modal .actions { flex-direction: column; }
+    #qr-modal .actions .btn { width: 100%; }
+    .toolbar { justify-content: center; text-align: center; }
   }
   ${extraStyle}
 </style></head>
@@ -109,7 +124,7 @@ function loginPage(erro) {
     <div class="card" style="max-width:360px;margin:60px auto 0">
       ${erro ? '<p class="erro">Senha incorreta.</p>' : ''}
       <form method="POST" action="/api/login" id="login-form">
-        <input type="password" name="senha" placeholder="Senha" style="width:100%;padding:11px 12px;border:1px solid var(--border);border-radius:10px;font-size:15px" autofocus>
+        <input type="password" name="senha" placeholder="Senha" style="width:100%;padding:13px 12px;border:1px solid var(--border);border-radius:10px;font-size:16px;min-height:48px" autofocus>
         <button type="submit" id="login-btn" style="width:100%;margin-top:10px">Entrar</button>
       </form>
     </div>
@@ -132,7 +147,6 @@ function adminPage({ links, erro }) {
   const rows = links
     .map((l) => {
       const trackUrl = `/qr/${l.slug}`;
-      const trackUrlFull = trackUrl; // relative, resolved client-side against current origin
       return `
         <div class="row">
           <div>
@@ -180,13 +194,17 @@ function adminPage({ links, erro }) {
       </form>
     </div>
 
+    <div class="toolbar">
+      <span class="muted">Cliques atualizam ao recarregar a página.</span>
+      <button type="button" class="secondary refresh-btn" id="refresh-btn">Atualizar</button>
+    </div>
+
     <div class="table">
       <div class="row header">
         <div>Nome</div><div>Link rastreável</div><div>Destino</div><div>Cliques</div><div>QR code</div>
       </div>
       ${rows || '<div class="empty">Nenhum link cadastrado ainda.</div>'}
     </div>
-    <p class="muted" style="margin-top:12px">Atualize a página para ver números novos.</p>
 
     <div id="qr-modal" hidden>
       <div class="box">
@@ -203,6 +221,13 @@ function adminPage({ links, erro }) {
         var btn = document.getElementById('add-btn');
         btn.disabled = true;
         btn.innerHTML = '<span class="spinner-inline"></span>Adicionando...';
+      });
+
+      document.getElementById('refresh-btn').addEventListener('click', function () {
+        var btn = document.getElementById('refresh-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-inline dark"></span>Atualizando...';
+        window.location.reload();
       });
 
       document.querySelectorAll('.copy-btn').forEach(function (btn) {
