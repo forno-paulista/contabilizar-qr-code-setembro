@@ -1,7 +1,7 @@
 // Destinos de cada QR code.
 // slug = o que vai aparecer na URL curta: seudominio.com/qr/<slug>
 export const links = {
-  compras: {
+  telao: {
     url: 'https://fornopaulista.tuigoapp.com.br/',
     utm_campaign: 'qrcode_compras',
   },
@@ -22,3 +22,5 @@ export const links = {
     utm_campaign: 'qrcode_avaliacao_hugo',
   },
 };
+
+// changes
