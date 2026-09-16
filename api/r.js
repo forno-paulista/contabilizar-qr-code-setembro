@@ -1,11 +1,11 @@
 import { Redis } from '@upstash/redis';
-import { links } from './links.js';
+import { getLink } from '../lib/store.js';
 
 const redis = Redis.fromEnv();
 
 export default async function handler(req, res) {
   const slug = req.query.slug;
-  const link = links[slug];
+  const link = await getLink(slug);
 
   if (!link) {
     res.status(404).send('Link não encontrado.');
@@ -28,7 +28,7 @@ export default async function handler(req, res) {
   const destination = new URL(link.url);
   destination.searchParams.set('utm_source', 'qrcode');
   destination.searchParams.set('utm_medium', 'qrcode');
-  destination.searchParams.set('utm_campaign', link.utm_campaign);
+  destination.searchParams.set('utm_campaign', link.utmCampaign || `qrcode_${slug}`);
 
   res.writeHead(302, { Location: destination.toString() });
   res.end();
