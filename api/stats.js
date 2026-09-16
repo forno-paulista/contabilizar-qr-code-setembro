@@ -137,7 +137,7 @@ function loginPage(erro) {
   return page(`
     <div class="card" style="max-width:360px;margin:60px auto 0;text-align:center">
       <img class="brand-logo big" src="/logo.png" alt="Forno Paulista" onerror="this.style.display='none'">
-      <h1 style="justify-content:center;padding:0">Painel QR Code</h1>
+      <h1 style="justify-content:center;padding:0;margin-bottom:18px">Painel QR Code</h1>
       ${erro ? '<p class="erro">Senha incorreta.</p>' : ''}
       <form method="POST" action="/api/login" id="login-form">
         <input type="password" name="senha" placeholder="Senha" style="width:100%;padding:13px 12px;border:1px solid var(--border);border-radius:10px;font-size:16px;min-height:48px" autofocus>
