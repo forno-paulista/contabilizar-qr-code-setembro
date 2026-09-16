@@ -35,19 +35,19 @@ function page(body, extraStyle = '') {
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 960px; margin: 0 auto; }
+  .wrap { max-width: 720px; margin: 0 auto; }
   h1 {
-    font-size: 20px; margin: 0 0 16px; display: flex; align-items: center; justify-content: space-between;
-    gap: 12px; position: sticky; top: 0; background: var(--bg); padding: 6px 0 10px; z-index: 10;
+    font-size: 18px; margin: 0; display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; padding: 10px 0;
   }
   h1 a { font-size: 14px; color: var(--muted); text-decoration: none; padding: 8px 4px; }
   h1 a:hover { color: var(--accent); }
-  .brand { display: flex; align-items: center; gap: 10px; }
-  .brand-logo { height: 32px; width: auto; display: block; }
+  .brand { display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .brand span.txt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .brand-logo { height: 28px; width: auto; display: block; flex-shrink: 0; }
   .brand-logo.big { height: 72px; margin: 0 auto 10px; }
   .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
-  .add-card { margin-bottom: 16px; }
-  .add-form { display: flex; gap: 10px; flex-wrap: wrap; }
+  .add-form { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
   .add-form input {
     flex: 1; min-width: 140px; padding: 13px 12px; border: 1px solid var(--border);
     border-radius: 10px; font-size: 16px; background: #fff; color: var(--text); min-height: 48px;
@@ -65,22 +65,32 @@ function page(body, extraStyle = '') {
   button.secondary:hover { background: var(--bg); }
   .erro { color: #b3261e; background: #fdecea; border: 1px solid #f3c8c4; border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; font-size: 14px; }
   .muted { color: var(--muted); font-size: 13px; }
-  .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 14px 0 10px; flex-wrap: wrap; }
-  .refresh-btn { padding: 9px 16px; min-height: 40px; font-size: 14px; }
-  .table { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; background: var(--card); margin-top: 4px; }
-  .row {
-    display: grid; grid-template-columns: 1.1fr 1.8fr 1.8fr .6fr 1.3fr;
-    gap: 10px; padding: 16px; align-items: center; border-bottom: 1px solid var(--border);
+
+  .topbar { position: sticky; top: 0; background: var(--bg); z-index: 20; padding-bottom: 10px; margin-bottom: 16px; }
+  .topbar::after { content: ''; display: block; height: 1px; background: var(--border); margin-top: 10px; }
+  .topbar-row2 { display: flex; align-items: center; gap: 10px; }
+  .add-trigger-btn { flex: 1; min-height: 44px; padding: 10px 16px; font-size: 15px; }
+  .refresh-btn { min-height: 44px; padding: 10px 16px; font-size: 14px; flex-shrink: 0; }
+
+  .link-list { display: flex; flex-direction: column; gap: 12px; }
+  .link-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; }
+  .link-card-head { display: flex; align-items: center; gap: 12px; }
+  .link-card-head .qr-thumb-wrap { width: 48px; height: 48px; flex-shrink: 0; }
+  .link-card-head .qr-thumb-wrap img { width: 48px; height: 48px; }
+  .link-card-head .qr-thumb-wrap .spinner { width: 18px; height: 18px; top: 15px; left: 15px; }
+  .link-card-name { font-weight: 700; font-size: 16px; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .clicks-badge {
+    background: linear-gradient(135deg, var(--flame), var(--accent)); color: #fff; font-weight: 700;
+    font-size: 13px; padding: 6px 12px; border-radius: 999px; flex-shrink: 0; white-space: nowrap;
   }
-  .row:last-child { border-bottom: none; }
-  .row.header { background: #f7f1eb; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
-  .cell-label { display: none; font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; letter-spacing: .03em; }
-  .trackurl { word-break: break-all; font-size: 14px; color: var(--accent-dark); text-decoration: none; }
-  .trackurl:hover { text-decoration: underline; }
-  .copy-btn { margin-top: 8px; padding: 9px 14px; font-size: 13px; min-height: 40px; background: var(--bg); color: var(--text); border: 1px solid var(--border); }
-  .copy-btn:hover { background: #fff; }
-  .dest { font-size: 14px; color: var(--muted); text-decoration: none; word-break: break-all; }
-  .clicks { font-size: 22px; font-weight: 700; }
+  .link-card-body { margin-top: 10px; font-size: 13px; }
+  .link-line { display: flex; gap: 6px; align-items: baseline; min-width: 0; margin-top: 4px; }
+  .link-line .line-label { color: var(--muted); flex-shrink: 0; }
+  .link-line a { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-decoration: none; }
+  .link-line a.trackurl { color: var(--accent-dark); }
+  .link-line a.dest { color: var(--muted); }
+  .link-card-actions { display: flex; gap: 8px; margin-top: 12px; }
+  .link-card-actions button { flex: 1; padding: 9px 10px; font-size: 13px; min-height: 40px; }
   .qr-thumb-wrap { position: relative; width: 72px; height: 72px; }
   .qr-thumb-wrap img { width: 72px; height: 72px; border-radius: 8px; border: 1px solid var(--border); display: block; }
   .spinner {
@@ -95,29 +105,28 @@ function page(body, extraStyle = '') {
     border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; margin-right: 6px; vertical-align: -2px;
   }
   .spinner-inline.dark { border-color: rgba(0,0,0,.15); border-top-color: var(--text); }
-  .ver-qr-btn { margin-top: 8px; font-size: 13px; padding: 9px 14px; min-height: 40px; }
-  .empty { padding: 36px 16px; text-align: center; color: var(--muted); }
+  .empty { padding: 36px 16px; text-align: center; color: var(--muted); background: var(--card); border: 1px solid var(--border); border-radius: 14px; }
 
-  #qr-modal {
+  #qr-modal, #add-modal {
     position: fixed; inset: 0; background: rgba(20,15,10,.6); display: flex;
     align-items: center; justify-content: center; padding: 20px; z-index: 50;
   }
-  #qr-modal[hidden] { display: none; }
-  #qr-modal .box { background: #fff; border-radius: 16px; padding: 24px; max-width: 360px; width: 100%; text-align: center; }
+  #qr-modal[hidden], #add-modal[hidden] { display: none; }
+  #qr-modal .box, #add-modal .box { background: #fff; border-radius: 16px; padding: 24px; max-width: 360px; width: 100%; text-align: center; }
   #qr-modal img { width: 100%; max-width: 280px; border-radius: 8px; border: 1px solid var(--border); }
   #qr-modal .actions { display: flex; gap: 10px; margin-top: 16px; justify-content: center; flex-wrap: wrap; }
+  #add-modal .box { text-align: left; }
+  #add-modal .box h2 { font-size: 17px; margin: 0 0 4px; }
+  #add-modal .add-form { margin-top: 10px; flex-direction: column; }
+  #add-modal .add-form input, #add-modal .add-form button { width: 100%; }
+  #add-modal .close-row { text-align: right; margin-top: -6px; }
+  #add-modal .close-row button { min-height: 36px; padding: 6px 12px; font-size: 13px; }
 
   @media (max-width: 680px) {
     body { padding: 12px 10px 50px; }
-    h1 { font-size: 18px; }
-    .row.header { display: none; }
-    .row { grid-template-columns: 1fr; gap: 12px; padding: 18px 16px; }
-    .cell-label { display: block; }
-    .add-form { flex-direction: column; }
-    .add-form input, .add-form button { width: 100%; }
+    h1 { font-size: 17px; }
     #qr-modal .actions { flex-direction: column; }
     #qr-modal .actions .btn { width: 100%; }
-    .toolbar { justify-content: center; text-align: center; }
   }
   ${extraStyle}
 </style></head>
@@ -128,7 +137,7 @@ function loginPage(erro) {
   return page(`
     <div class="card" style="max-width:360px;margin:60px auto 0;text-align:center">
       <img class="brand-logo big" src="/logo.png" alt="Forno Paulista" onerror="this.style.display='none'">
-      <h1 style="position:static;justify-content:center;padding:0">Painel QR Code</h1>
+      <h1 style="justify-content:center;padding:0">Painel QR Code</h1>
       ${erro ? '<p class="erro">Senha incorreta.</p>' : ''}
       <form method="POST" action="/api/login" id="login-form">
         <input type="password" name="senha" placeholder="Senha" style="width:100%;padding:13px 12px;border:1px solid var(--border);border-radius:10px;font-size:16px;min-height:48px" autofocus>
@@ -150,38 +159,37 @@ function adminPage({ links, erro }) {
     campos: 'Preencha nome e URL de destino.',
     url: 'URL de destino inválida.',
   }[erro];
+  const openAddModal = Boolean(erroMsg);
 
-  const rows = links
+  const cards = links
     .map((l) => {
       const trackUrl = `/qr/${l.slug}`;
+      const clicksLabel = l.clicks === 1 ? 'clique' : 'cliques';
       return `
-        <div class="row">
-          <div>
-            <div class="cell-label">Nome</div>
-            ${escapeHtml(l.slug)}
-          </div>
-          <div>
-            <div class="cell-label">Link rastreável</div>
-            <a class="trackurl" href="${trackUrl}" target="_blank">${escapeHtml(trackUrl)}</a><br>
-            <button type="button" class="copy-btn" data-url="${escapeHtml(trackUrl)}">Copiar link</button>
-          </div>
-          <div>
-            <div class="cell-label">Destino</div>
-            <a class="dest" href="${escapeHtml(l.url)}" target="_blank">${escapeHtml(l.url)}</a>
-          </div>
-          <div>
-            <div class="cell-label">Cliques</div>
-            <span class="clicks">${l.clicks}</span>
-          </div>
-          <div>
-            <div class="cell-label">QR code</div>
+        <div class="link-card">
+          <div class="link-card-head">
             <div class="qr-thumb-wrap">
               <div class="spinner"></div>
-              <img src="/api/qr?slug=${encodeURIComponent(l.slug)}&size=140" alt="QR ${escapeHtml(l.slug)}"
+              <img src="/api/qr?slug=${encodeURIComponent(l.slug)}&size=100" alt="QR ${escapeHtml(l.slug)}"
                    onload="this.parentElement.classList.add('loaded')"
                    onerror="this.parentElement.classList.add('loaded')">
             </div>
-            <button type="button" class="btn secondary ver-qr-btn" data-slug="${escapeHtml(l.slug)}">Ver grande</button>
+            <div class="link-card-name" title="${escapeHtml(l.slug)}">${escapeHtml(l.slug)}</div>
+            <div class="clicks-badge">${l.clicks} ${clicksLabel}</div>
+          </div>
+          <div class="link-card-body">
+            <div class="link-line">
+              <span class="line-label">Link:</span>
+              <a class="trackurl" href="${trackUrl}" target="_blank" title="${trackUrl}">${escapeHtml(trackUrl)}</a>
+            </div>
+            <div class="link-line">
+              <span class="line-label">Destino:</span>
+              <a class="dest" href="${escapeHtml(l.url)}" target="_blank" title="${escapeHtml(l.url)}">${escapeHtml(l.url)}</a>
+            </div>
+          </div>
+          <div class="link-card-actions">
+            <button type="button" class="secondary copy-btn" data-url="${escapeHtml(trackUrl)}">Copiar link</button>
+            <button type="button" class="secondary ver-qr-btn" data-slug="${escapeHtml(l.slug)}">Ver QR grande</button>
           </div>
         </div>
       `;
@@ -189,31 +197,32 @@ function adminPage({ links, erro }) {
     .join('');
 
   return page(`
-    <h1>
-      <span class="brand"><img class="brand-logo" src="/logo.png" alt="Forno Paulista" onerror="this.style.display='none'"> Painel QR Code</span>
-      <a href="/api/logout">Sair</a>
-    </h1>
-
-    ${erroMsg ? `<p class="erro">${erroMsg}</p>` : ''}
-
-    <div class="card add-card">
-      <form class="add-form" id="add-form" method="POST" action="/api/links-create">
-        <input type="text" name="nome" placeholder="Nome (ex: Instagram)" required>
-        <input type="url" name="url" placeholder="https://instagram.com/fornopaulista" required>
-        <button type="submit" id="add-btn">Adicionar link</button>
-      </form>
-    </div>
-
-    <div class="toolbar">
-      <span class="muted">Cliques atualizam ao recarregar a página.</span>
-      <button type="button" class="secondary refresh-btn" id="refresh-btn">Atualizar</button>
-    </div>
-
-    <div class="table">
-      <div class="row header">
-        <div>Nome</div><div>Link rastreável</div><div>Destino</div><div>Cliques</div><div>QR code</div>
+    <div class="topbar">
+      <h1>
+        <span class="brand"><img class="brand-logo" src="/logo.png" alt="Forno Paulista" onerror="this.style.display='none'"><span class="txt">Painel QR Code</span></span>
+        <a href="/api/logout">Sair</a>
+      </h1>
+      <div class="topbar-row2">
+        <button type="button" class="add-trigger-btn" id="open-add-modal">+ Adicionar link</button>
+        <button type="button" class="secondary refresh-btn" id="refresh-btn">Atualizar</button>
       </div>
-      ${rows || '<div class="empty">Nenhum link cadastrado ainda.</div>'}
+    </div>
+
+    <div class="link-list">
+      ${cards || '<div class="empty">Nenhum link cadastrado ainda.</div>'}
+    </div>
+
+    <div id="add-modal" ${openAddModal ? '' : 'hidden'}>
+      <div class="box">
+        <div class="close-row"><button type="button" class="secondary" id="add-modal-close">Fechar</button></div>
+        <h2>Adicionar link</h2>
+        ${erroMsg ? `<p class="erro">${erroMsg}</p>` : ''}
+        <form class="add-form" id="add-form" method="POST" action="/api/links-create">
+          <input type="text" name="nome" placeholder="Nome (ex: Instagram)" required>
+          <input type="url" name="url" placeholder="https://instagram.com/fornopaulista" required>
+          <button type="submit" id="add-btn">Adicionar link</button>
+        </form>
+      </div>
     </div>
 
     <div id="qr-modal" hidden>
@@ -227,6 +236,17 @@ function adminPage({ links, erro }) {
     </div>
 
     <script>
+      var addModal = document.getElementById('add-modal');
+      document.getElementById('open-add-modal').addEventListener('click', function () {
+        addModal.hidden = false;
+      });
+      document.getElementById('add-modal-close').addEventListener('click', function () {
+        addModal.hidden = true;
+      });
+      addModal.addEventListener('click', function (e) {
+        if (e.target === addModal) addModal.hidden = true;
+      });
+
       document.getElementById('add-form').addEventListener('submit', function () {
         var btn = document.getElementById('add-btn');
         btn.disabled = true;
